@@ -1,0 +1,6 @@
+iot-token.json
+secure-connect-iot.zip
+env/
+__pycache__/
+.vscode/
+.pytest_cache/
