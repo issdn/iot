@@ -17,12 +17,12 @@ def create_new_table():
     """
     session.execute(NEW_HT_TABLE)
 
-def insert_ht(ht: HT):
-    params = (ht["temperature"], ht["humidity"], datetime.now(),)
+def insert_ht(ht: HT) -> None:
+    params = (ht.temperature, ht.humidity, datetime.now(),)
     session.execute(f"INSERT INTO {KEYSPACE}.{TABLE} (temperature, humidity, measured_at) VALUES (%s, %s, %s);", params)
 
-def select_all_ht():
+def select_all_ht() -> list[HT]:
     return session.execute("SELECT measured_at, temperature, humidity FROM iot.ht;")
 
-if __name__ == "__main__":
-    insert_ht({"temperature": 0, "humidity": 0})
+def delete_all_unrealistic_ht() -> None:
+    session.execute(f"DELETE FROM {KEYSPACE}.{TABLE} WHERE temperature < -50;")

@@ -1,15 +1,13 @@
-from fastapi import FastAPI, status
-from models import HT
-
-def add_ht_to_database(ht: HT) -> None:
-    pass
+from fastapi import FastAPI
+from iot_server.models import HT
+from iot_server.database_crud_functions import insert_ht, select_all_ht
 
 app = FastAPI()
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
 @app.post("/api/ht")
 def humidity_temperature(ht: HT):
-    return status(200)
+    insert_ht(ht)
+
+@app.get("/api/ht")
+def get_humidity_temperature():
+    return select_all_ht()

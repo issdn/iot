@@ -3,8 +3,8 @@ from cassandra.auth import PlainTextAuthProvider
 from os.path import abspath
 import json
 
-PATH_TO_SECURE_CONNECT = abspath("../../secure-connect-iot.zip")
-PATH_TO_SECURE_TOKEN = abspath("../../iot-token.json")
+PATH_TO_SECURE_CONNECT = abspath("../secure-connect-iot.zip")
+PATH_TO_SECURE_TOKEN = abspath("../iot-token.json")
 
 with open(PATH_TO_SECURE_TOKEN, "r") as json_file:
   iot_token_file = json.load(json_file)
