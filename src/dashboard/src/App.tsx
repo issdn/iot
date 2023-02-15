@@ -1,7 +1,9 @@
+import HTLayout from "./HT/Components/HTLayout";
+
 function App() {
   return (
-    <div className="App">
-      <h1 className="text-red-500">ASDASD</h1>
+    <div className="h-screen w-screen bg-zinc-900 text-white">
+      <HTLayout />
     </div>
   );
 }
