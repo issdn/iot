@@ -30,7 +30,7 @@ export default function Table({ data }: { data: HT[] }) {
   };
   //border-b border-white
   return (
-    <div className="p-2 w-full h-full">
+    <div className="w-full h-full">
       <div className="bg-zinc-800 w-full h-full p-2 rounded-xl">
         <table className="w-full h-full p-8">
           <thead className="mb-4">
