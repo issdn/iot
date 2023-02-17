@@ -1,22 +1,27 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { removeNanosecondsFromTime } from "../functions";
 import { HT } from "../types";
+import dayjs from "dayjs";
 
-export const useHTTable = (date: string) => {
+export const useHTTable = (date: dayjs.Dayjs) => {
   const [data, setData] = useState<HT[]>([]);
 
   useEffect(() => {
-    fetch(
-      "http://192.168.0.51:8000/api/ht" + (date === "" ? date : "?date=" + date)
-    )
+    fetch("http://192.168.0.51:8000/api/ht?date=" + date.format("YYYY-MM-DD"))
       .then((res) => res.json())
       .then((data) => setData(data.measurements));
-  }, []);
+  }, [date]);
 
   return [data, setData];
 };
 
-export default function Table({ data }: { data: HT[] }) {
+export default function Table({
+  data,
+  date,
+}: {
+  data: HT[];
+  date: dayjs.Dayjs;
+}) {
   const renderDTHRow = (dht: HT) => {
     return (
       <tr key={dht.measurement_time}>
@@ -28,7 +33,7 @@ export default function Table({ data }: { data: HT[] }) {
       </tr>
     );
   };
-  //border-b border-white
+
   return (
     <div className="w-full h-full">
       <div className="bg-zinc-800 w-full h-full p-2 rounded-xl">
@@ -40,7 +45,7 @@ export default function Table({ data }: { data: HT[] }) {
               <th className="text-center">Humidity</th>
             </tr>
           </thead>
-          <tbody className="[&_tr:not(:last-child)]:border-b [&_tr:not(:last-child)]:border-white">
+          <tbody className="[&_tr:nth-child(2n)]:bg-zinc-700">
             {data.map((dht) => renderDTHRow(dht))}
           </tbody>
         </table>

@@ -1,0 +1,6 @@
+.vscode/
+.gitignore
+dashboard/
+__pycache__/
+.pytest_cache/
+env/

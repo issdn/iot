@@ -19,7 +19,7 @@ const MONTH_NAMES = [
   "December",
 ];
 
-type UseCalendarType = {
+export type UseCalendarType = {
   date: dayjs.Dayjs;
   moveDayLeft: () => void;
   moveDayRight: () => void;
@@ -32,12 +32,8 @@ type UseCalendarType = {
   reachedMinMonth: (month: number) => boolean;
 };
 
-export const useCalendar = (
-  date: dayjs.Dayjs,
-  from: dayjs.Dayjs,
-  to: dayjs.Dayjs
-) => {
-  const [_date, _setDate] = useState(date);
+export const useCalendar = (from: dayjs.Dayjs, to: dayjs.Dayjs) => {
+  const [_date, _setDate] = useState(to);
 
   const moveMonthRight = () => {
     _setDate(_date.add(1, "M"));

@@ -31,7 +31,7 @@ def insert_ht(ht: HT) -> None:
 def select_all_ht() -> list[HT]:
     return session.execute("SELECT temperature, humidity, measurement_date, measurement_time FROM iot.ht;")
 
-def select_ht_by_date(date: datetime) -> list[HT]:
+def select_ht_by_date(date: str) -> list[HT]:
     return session.execute(f"SELECT temperature, humidity, CAST(measurement_time as text) as measurement_time FROM iot.ht WHERE measurement_date = %s;", (date,))
 
 def delete_all_unrealistic_ht() -> None:
