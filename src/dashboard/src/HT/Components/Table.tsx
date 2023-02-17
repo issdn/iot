@@ -22,7 +22,7 @@ export default function Table({ data }: { data: HT[] }) {
         <td className="text-center">
           {removeNanosecondsFromTime(dht.measurement_time)}
         </td>
-        <td className="text-center">{dht.temperature.toFixed(1)}°C</td>
+        <td className="text-center">{dht.temperature}°C</td>
         <td className="text-center">{Math.round(dht.humidity)}%</td>
       </tr>
     );

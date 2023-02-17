@@ -4,22 +4,35 @@ import DayPicker from "../../Components/DayPicker";
 import { HT } from "../types";
 import Table, { useHTTable } from "./Table";
 import HTLineGraph from "./HTLineGraph";
+import { TooltipProps } from "recharts/types/component/Tooltip";
+import {
+  NameType,
+  ValueType,
+} from "recharts/types/component/DefaultTooltipContent";
+
+export type HTValueType = ValueType & HT;
 
 export default function HTLayout() {
   const calendar = useCalendar(dayjs("2023-01-01"), dayjs());
   const [data, setData] = useHTTable(calendar.date);
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-zinc-700 p-2 rounded-xl flex flex-col items-center">
-          <p className="font-bold">{label}</p>
-          <p className="">asdasdasdas</p>
-        </div>
-      );
-    }
+  const htTooltip = (dataKey: keyof HT) => {
+    return ({
+      active,
+      payload,
+      label,
+    }: TooltipProps<HTValueType, NameType>) => {
+      if (active && payload && payload.length) {
+        return (
+          <div className="bg-zinc-700 p-2 rounded-xl flex flex-col items-center">
+            <p className="font-bold">{label}</p>
+            <p className="">{payload[0].payload[dataKey]}</p>
+          </div>
+        );
+      }
 
-    return null;
+      return null;
+    };
   };
 
   const DataVisualisation = () => {
@@ -33,8 +46,8 @@ export default function HTLayout() {
               title="Temperature °C"
               dataLabel="temperature"
               data={data as HT[]}
-              dataKey={(obj) => obj.temperature.toFixed(1)}
-              CustomTooltip={<CustomTooltip />}
+              dataKey={(obj) => obj.temperature}
+              CustomTooltip={htTooltip("temperature")}
             />
 
             <HTLineGraph
@@ -42,7 +55,7 @@ export default function HTLayout() {
               dataLabel="humidity"
               data={data as HT[]}
               dataKey="humidity"
-              CustomTooltip={<CustomTooltip />}
+              CustomTooltip={htTooltip("humidity")}
             />
           </div>
         </div>

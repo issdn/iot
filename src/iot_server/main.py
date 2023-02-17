@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from iot_server.models import HT
-from iot_server.database_crud_functions import insert_ht, select_ht_by_date
+from iot_server.database_crud_functions import insert_ht, select_ht_by_date, create_new_table
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
 import cassandra
@@ -20,6 +20,10 @@ app.add_middleware(
 @app.post("/api/ht")
 def humidity_temperature(ht: HT):
     insert_ht(ht)
+
+@app.get("/api/test/newtable")
+def new_table():
+    create_new_table()
 
 @app.get("/api/ht")
 def get_humidity_temperature(date: str = datetime.utcnow().strftime("%Y-%m-%d")):

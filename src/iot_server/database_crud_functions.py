@@ -12,12 +12,12 @@ session.row_factory = dict_factory
 def create_new_table():
     NEW_HT_TABLE = f"""
     CREATE TABLE {KEYSPACE}.{TABLE} (
-        temperature float,
-        humidity float,
+        temperature double,
+        humidity int,
         measurement_date date,
         measurement_time time,
         PRIMARY KEY ((measurement_date), measurement_time)
-    ) WITH CLUSTERING ORDER BY (measurement_time DESC); 
+    ) WITH CLUSTERING ORDER BY (measurement_time ASC); 
     """
     session.execute(f"DROP TABLE IF EXISTS {KEYSPACE}.{TABLE};")
     session.execute(NEW_HT_TABLE)
@@ -25,7 +25,7 @@ def create_new_table():
 def insert_ht(ht: HT) -> None:
     # Nodemcu will send maximally 2880 updates per 24h cycle (every 30 seconds), given that the temperature or humidity changes.
     curr_time = datetime.utcnow().replace(microsecond=0)
-    params = (round(ht.temperature, 2), ht.humidity, curr_time.date(), curr_time.time())
+    params = (round(ht.temperature, 1), int(ht.humidity), curr_time.date(), curr_time.time())
     session.execute(f"INSERT INTO {KEYSPACE}.{TABLE} (temperature, humidity, measurement_date, measurement_time) VALUES (%s, %s, %s, %s);", params)
 
 def select_all_ht() -> list[HT]:
