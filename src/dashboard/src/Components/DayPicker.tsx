@@ -8,7 +8,7 @@ export default function DayPicker({ calendar }: { calendar: UseCalendarType }) {
   const { visible, switchVisible } = useVisibility() as UseVisibilityType;
 
   return (
-    <div className="flex flex-col gap-y-2">
+    <div className="flex flex-col gap-y-2 md:max-w-md">
       <div className="flex flex-row gap-x-2 px-8 py-1 items-center justify-between bg-zinc-800 rounded-xl">
         <IconButton
           name="chevron_left"

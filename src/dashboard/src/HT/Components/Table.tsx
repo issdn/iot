@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { removeNanosecondsFromTime } from "../functions";
 import { HT } from "../types";
 import dayjs from "dayjs";
@@ -15,13 +15,7 @@ export const useHTTable = (date: dayjs.Dayjs) => {
   return [data, setData];
 };
 
-export default function Table({
-  data,
-  date,
-}: {
-  data: HT[];
-  date: dayjs.Dayjs;
-}) {
+export default function Table({ data }: { data: HT[] }) {
   const renderDTHRow = (dht: HT) => {
     return (
       <tr key={dht.measurement_time}>
@@ -35,7 +29,7 @@ export default function Table({
   };
 
   return (
-    <div className="w-full h-full">
+    <div className="">
       <div className="bg-zinc-800 w-full h-full p-2 rounded-xl">
         <table className="w-full h-full p-8">
           <thead className="mb-4">
