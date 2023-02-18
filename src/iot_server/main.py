@@ -18,7 +18,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-current_controller = Controller()
+current_controller = Controller("HT")
 
 
 @app.get("/api/test/newtable")
@@ -29,7 +29,7 @@ def new_table():
 @app.get("/api/controllers")
 def get_connected_controller():
     try:
-        return current_controller.get_info()
+        return [current_controller.get_info()]
     except NoControllerException:
         return []
 

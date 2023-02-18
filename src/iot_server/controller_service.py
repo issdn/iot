@@ -7,7 +7,8 @@ class NoControllerException(Exception):
 
 
 class Controller:
-    def __init__(self) -> None:
+    def __init__(self, name: str = "controller") -> None:
+        self.name: str = name
         self.base_info: ControllerModel = None
         self.last_message_time: datetime.time = None
 
@@ -21,7 +22,7 @@ class Controller:
             raise NoControllerException("No controller running.")
         timedelta = datetime.utcnow() - self.last_message_time
         last_message_to_now_minutes_difference = timedelta.total_seconds() / 60
-        return ControllerInfoModel(**self.base_info.dict(), last_message_minutes_ago=last_message_to_now_minutes_difference)
+        return ControllerInfoModel(**self.base_info.dict(), last_message_minutes_ago=last_message_to_now_minutes_difference, name=self.name)
 
     def update_last_message_time(self):
         if self.base_info:

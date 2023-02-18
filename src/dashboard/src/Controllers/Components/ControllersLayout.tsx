@@ -13,13 +13,15 @@ export default function ControllersLayout() {
 
   return (
     <div className="h-full w-full">
-      <div className="flex h-full w-full flex-col items-center rounded-xl border border-zinc-700 p-4">
+      <div className="flex h-full w-full flex-col items-center gap-y-4 rounded-xl border border-zinc-700 p-2">
         <p className="text-center text-xl">
           {controllers.length} controllers connected.
         </p>
-        {(controllers as ControllerInfoType[]).map((controller) => (
-          <ControllersInfo key={controller.ip} data={controller} />
-        ))}
+        <div className="flex flex-col gap-y-4 border-t border-zinc-700 pt-4">
+          {(controllers as ControllerInfoType[]).map((controller) => (
+            <ControllersInfo key={controller.ip} data={controller} />
+          ))}
+        </div>
       </div>
     </div>
   );
