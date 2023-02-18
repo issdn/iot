@@ -104,7 +104,7 @@ export default function CalendarMonth({
   reachedMaxMonth: UseCalendarType["reachedMaxMonth"];
   reachedMinMonth: UseCalendarType["reachedMinMonth"];
 }) {
-  const DayButton = (day: number) => {
+  const renderDayButton = (day: number) => {
     const disabled = reachedMaxDay(day) || reachedMinDay(day);
 
     return (
@@ -112,7 +112,7 @@ export default function CalendarMonth({
         onClick={() => setDay(day)}
         key={day}
         type={"basic"}
-        styles="w-11 h-11 rounded-xl text-xl disabled:text-zinc-600"
+        styles="w-11 h-11 rounded-xl text-xl disabled:text-zinc-600 flex flex-row items-center justify-center"
         attributes={{ disabled: disabled }}
       >
         <p>{day + 1}</p>
@@ -124,7 +124,7 @@ export default function CalendarMonth({
     return (
       <div className="grid grid-cols-7 gap-x-1 gap-y-1 place-items-center place-content-center">
         {Array.from(Array(date.daysInMonth()).keys()).map((day: number) =>
-          DayButton(day)
+          renderDayButton(day)
         )}
       </div>
     );

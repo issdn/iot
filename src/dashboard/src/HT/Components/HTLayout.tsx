@@ -9,7 +9,7 @@ import {
   NameType,
   ValueType,
 } from "recharts/types/component/DefaultTooltipContent";
-import { StyleHTMLAttributes } from "react";
+import { StyleHTMLAttributes, useEffect } from "react";
 
 export type HTValueType = ValueType & HT;
 
@@ -42,7 +42,7 @@ export default function HTLayout() {
       return (
         <div className="w-full h-full flex flex-col gap-y-4">
           <div
-            className="h-full overflow-y-scroll xlbasis-3/5"
+            className="h-full overflow-y-scroll xl:basis-3/5"
             style={
               {
                 "scrollbar-width": "thin",

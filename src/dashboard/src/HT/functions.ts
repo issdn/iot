@@ -1,19 +1,15 @@
-export const toPrettyDateUTC = (date: string) => {
-  const dateObject = new Date(date);
-  const hours = dateObject.getHours().toString();
-  const minutes = dateObject.getMinutes().toString();
-  const seconds = dateObject.getSeconds().toString();
-  return hours + ":" + minutes + ":" + seconds;
-};
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import tz from "dayjs/plugin/timezone";
 
-export const nsSinceMidnightToTime = (ns: number) => {
-  var date = new Date(ns);
-  return ns - date.setHours(0, 0, 0, 0);
-};
+dayjs.extend(utc);
+dayjs.extend(tz);
 
 export const cassandraTimeToDisplayTime = (time: string) => {
   const hourMinutesSecondsNanoseconds = time.split(":");
-  return (
-    hourMinutesSecondsNanoseconds[0] + ":" + hourMinutesSecondsNanoseconds[1]
-  );
+  const date = dayjs
+    .utc()
+    .set("h", parseInt(hourMinutesSecondsNanoseconds[0]))
+    .set("m", parseInt(hourMinutesSecondsNanoseconds[1]));
+  return dayjs.tz(date, "Europe/Berlin").format("HH:mm");
 };

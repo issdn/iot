@@ -22,7 +22,9 @@ export default function DayPicker({ calendar }: { calendar: UseCalendarType }) {
           onClick={switchVisible}
           className="flex flex-row gap-x-2 items-center hover:bg-zinc-700 px-4 rounded-xl"
         >
-          <p className="font-bold">{calendar.date.format("YYYY-MM-DD")}</p>
+          <p className="font-bold break-keep whitespace-nowrap">
+            {calendar.date.format("YYYY-MM-DD")}
+          </p>
           {<Icon name="calendar_month" styles="text-2xl" />}
         </button>
         <IconButton

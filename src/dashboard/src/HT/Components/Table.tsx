@@ -3,13 +3,22 @@ import { cassandraTimeToDisplayTime } from "../functions";
 import { HT } from "../types";
 import dayjs from "dayjs";
 
+const clearDataTimes = (data: HT[]) => {
+  return data.map((ht) => {
+    return {
+      ...ht,
+      measurement_time: cassandraTimeToDisplayTime(ht.measurement_time),
+    };
+  });
+};
+
 export const useHTTable = (date: dayjs.Dayjs) => {
   const [data, setData] = useState<HT[]>([]);
 
   const fetchHT = useCallback(() => {
     fetch("http://192.168.0.51:8000/api/ht?date=" + date.format("YYYY-MM-DD"))
       .then((res) => res.json())
-      .then((data) => setData(data.measurements));
+      .then((data) => setData(clearDataTimes(data.measurements)));
   }, [date]);
 
   useEffect(() => {
@@ -30,9 +39,7 @@ export default function Table({ data }: { data: HT[] }) {
   const renderDTHRow = (dht: HT) => {
     return (
       <tr key={dht.measurement_time}>
-        <td className="text-center">
-          {cassandraTimeToDisplayTime(dht.measurement_time)}
-        </td>
+        <td className="text-center">{dht.measurement_time}</td>
         <td className="text-center">{dht.temperature}°C</td>
         <td className="text-center">{Math.round(dht.humidity)}%</td>
       </tr>
@@ -40,8 +47,8 @@ export default function Table({ data }: { data: HT[] }) {
   };
 
   return (
-    <div className="bg-zinc-800 w-full h-full p-2 rounded-xl">
-      <table className="w-full h-full p-8 bg-zinc-800">
+    <div className="bg-zinc-800 w-full p-2 rounded-xl">
+      <table className="w-full p-8 bg-zinc-800">
         <thead className="mb-4">
           <tr>
             <th className="text-center">Measured At</th>
