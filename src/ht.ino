@@ -23,14 +23,36 @@
 #define WIFI_PASS "PLACEHOLDER"
 
 uint8_t DHTPin = D4;
-uint32_t port = 80;
+uint32_t port = 8000;
 String ip = "PLACEHOLDER";
 DHT dht(DHTPin, DHTTYPE);
 
-// The data is being stored two times so that
-// it only sends it when the temperature or humidity changes.
 float temperature;
 float humidity;
+
+void httpPost(WiFiClient client, String endpoint, String request) { 
+  HTTPClient http;
+  http.begin(client, "http://" + ip + ":" + String(port) + endpoint);
+  http.addHeader("Content-Type", "application/json");
+
+  int responseCode = http.POST(request);
+
+  if (responseCode < 0) {
+    Serial.println("ERROR: " + http.errorToString(responseCode));
+  } else {
+    Serial.println("Response: " + String(responseCode));
+  };
+  http.end();
+}
+
+void sendPostRequest(String endpoint, String request){
+  WiFiClient client;
+  while (!client.connect(ip, port)) {
+    Serial.println("Couldn't connect to the server.");
+    delay(30000);
+  }
+  httpPost(client, endpoint, request);
+}
 
 void setup() {
   Serial.begin(115200);
@@ -43,39 +65,23 @@ void setup() {
   Serial.println("Connected.");
 }
 
-void sendHttpsMessage(WiFiClient client, float temperature, float humidity) {
-  Serial.println(String("Sending data to: ") + "http://" + ip + ":" + String(port));
-  
-  HTTPClient http;
-  http.begin(client, "http://" + ip + ":" + String(port) + "/api/ht");
-  http.addHeader("Content-Type", "application/json");
-  
-  String request = "{\"temperature\":" + String(temperature) + ", \"humidity\":" + String(humidity) + "}";
-
-  int responseCode = http.POST(request);
-
-  if (responseCode < 0) {
-    Serial.println("ERROR -> " + http.errorToString(responseCode));
-  } else {
-    Serial.println(responseCode);
-  };
-  http.end();
-}
-
-
 void loop() {
+  delay(60000);
+
   if (WiFi.status() != WL_CONNECTED) { 
     Serial.println("No WiFi connection.");
   }
   
   WiFiClient client;
-  if(!client.connect(ip, port)) {
+  while(!client.connect(ip, port)) {
     Serial.println("Couldn't connect to the server.");
+    delay(30000);
   }
 
   temperature = dht.readTemperature();
   humidity = dht.readHumidity();
 
-  sendHttpsMessage(client, temperature, humidity);
-  delay(60000);
+  String request = "{\"temperature\":" + String(temperature) + ", \"humidity\":" + String(humidity) + "}";
+  Serial.println("/api/ht | " + request);
+  sendPostRequest("/api/ht", request);
 }

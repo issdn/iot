@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { cassandraTimeToDisplayTime } from "../functions";
 import { HT } from "../types";
 import dayjs from "dayjs";
@@ -36,6 +36,7 @@ export const useHTTable = (date: dayjs.Dayjs) => {
 };
 
 export default function Table({ data }: { data: HT[] }) {
+  if (data.length === 0) return <p>No data for this day 😔</p>;
   const renderDTHRow = (dht: HT) => {
     return (
       <tr key={dht.measurement_time}>
@@ -47,8 +48,8 @@ export default function Table({ data }: { data: HT[] }) {
   };
 
   return (
-    <div className="bg-zinc-800 w-full p-2 rounded-xl">
-      <table className="w-full p-8 bg-zinc-800">
+    <div className="w-full rounded-xl bg-zinc-800 p-2">
+      <table className="h-full w-full bg-zinc-800 p-8">
         <thead className="mb-4">
           <tr>
             <th className="text-center">Measured At</th>

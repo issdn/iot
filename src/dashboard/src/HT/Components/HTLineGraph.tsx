@@ -27,7 +27,7 @@ export default function HTLineGraph({
   lineFill: string;
 }) {
   return (
-    <div className="flex flex-col pt-4 pr-3 gap-y-2 items-center border-2 border-zinc-700 rounded-xl">
+    <div className="flex h-full w-full flex-col items-center gap-y-2 rounded-xl border-2 border-zinc-700 pt-4 pr-3">
       <p>{title}</p>
       <ResponsiveContainer height="100%" width="99%">
         <LineChart data={data}>

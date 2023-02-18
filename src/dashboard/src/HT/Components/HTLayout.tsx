@@ -9,7 +9,7 @@ import {
   NameType,
   ValueType,
 } from "recharts/types/component/DefaultTooltipContent";
-import { StyleHTMLAttributes, useEffect } from "react";
+import { StyleHTMLAttributes } from "react";
 
 export type HTValueType = ValueType & HT;
 
@@ -25,7 +25,7 @@ export default function HTLayout() {
     }: TooltipProps<HTValueType, NameType>) => {
       if (active && payload && payload.length) {
         return (
-          <div className="bg-zinc-700 p-2 rounded-xl flex flex-col items-center">
+          <div className="flex flex-col items-center rounded-xl bg-zinc-700 p-2">
             <p className="font-bold">{label}</p>
             <p className="">{payload[0].payload[dataKey]}</p>
           </div>
@@ -36,50 +36,41 @@ export default function HTLayout() {
     };
   };
 
-  const DataVisualisation = () => {
-    if (data.length === 0) return <p>No data for this day 😔</p>;
-    else
-      return (
-        <div className="w-full h-full flex flex-col gap-y-4">
-          <div
-            className="h-full overflow-y-scroll xl:basis-3/5"
-            style={
-              {
-                "scrollbar-width": "thin",
-              } as StyleHTMLAttributes<HTMLDivElement> & {
-                "scrollbar-width": "thin";
-              }
-            }
-          >
-            <Table data={data as HT[]} />
-          </div>
-          <div className="h-full xl:basis-2/5 grid grid-cols-1 xl:grid-cols-2 gap-x-4 gap-y-4">
-            <HTLineGraph
-              lineFill="#D97706"
-              title="Temperature °C"
-              dataLabel="temperature"
-              data={data as HT[]}
-              dataKey={(obj) => obj.temperature}
-              CustomTooltip={htTooltip("temperature")}
-            />
-
-            <HTLineGraph
-              lineFill="#2563EB"
-              title="Humidity %"
-              dataLabel="humidity"
-              data={data as HT[]}
-              dataKey="humidity"
-              CustomTooltip={htTooltip("humidity")}
-            />
-          </div>
-        </div>
-      );
-  };
-
   return (
-    <div className="flex flex-col md:flex-row gap-y-4 gap-x-4 h-full">
-      <DayPicker calendar={calendar} />
-      <DataVisualisation />
+    <div className="flex h-fit flex-col gap-y-4 lg:h-full">
+      <div className="flex h-screen w-full flex-col gap-x-4 gap-y-4 lg:h-full lg:basis-3/5 lg:flex-row lg:overflow-y-hidden">
+        <DayPicker calendar={calendar} />
+        <div
+          className="h-full w-full overflow-y-scroll"
+          style={
+            {
+              "scrollbar-width": "thin",
+            } as StyleHTMLAttributes<HTMLDivElement> & {
+              "scrollbar-width": "thin";
+            }
+          }
+        >
+          <Table data={data as HT[]} />
+        </div>
+      </div>
+      <div className="grid h-full w-full grid-cols-1 gap-x-4 gap-y-4 lg:h-full lg:basis-2/5 lg:grid-cols-2">
+        <HTLineGraph
+          lineFill="#D97706"
+          title="Temperature °C"
+          dataLabel="temperature"
+          data={data as HT[]}
+          dataKey={(obj) => obj.temperature}
+          CustomTooltip={htTooltip("temperature")}
+        />
+        <HTLineGraph
+          lineFill="#2563EB"
+          title="Humidity %"
+          dataLabel="humidity"
+          data={data as HT[]}
+          dataKey="humidity"
+          CustomTooltip={htTooltip("humidity")}
+        />
+      </div>
     </div>
   );
 }

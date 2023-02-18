@@ -8,8 +8,8 @@ export default function DayPicker({ calendar }: { calendar: UseCalendarType }) {
   const { visible, switchVisible } = useVisibility() as UseVisibilityType;
 
   return (
-    <div className="flex flex-col gap-y-2 md:max-w-md">
-      <div className="flex flex-row gap-x-2 px-8 py-1 items-center justify-between bg-zinc-800 rounded-xl">
+    <div className="flex flex-col gap-y-2 lg:max-w-md">
+      <div className="flex flex-row items-center justify-between gap-x-2 rounded-xl bg-zinc-800 px-8 py-1">
         <IconButton
           name="chevron_left"
           styles="text-3xl rounded-full px-0.5"
@@ -20,9 +20,9 @@ export default function DayPicker({ calendar }: { calendar: UseCalendarType }) {
         />
         <button
           onClick={switchVisible}
-          className="flex flex-row gap-x-2 items-center hover:bg-zinc-700 px-4 rounded-xl"
+          className="flex flex-row items-center gap-x-2 rounded-xl px-4 hover:bg-zinc-700"
         >
-          <p className="font-bold break-keep whitespace-nowrap">
+          <p className="whitespace-nowrap break-keep font-bold">
             {calendar.date.format("YYYY-MM-DD")}
           </p>
           {<Icon name="calendar_month" styles="text-2xl" />}
