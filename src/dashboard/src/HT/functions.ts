@@ -11,6 +11,9 @@ export const nsSinceMidnightToTime = (ns: number) => {
   return ns - date.setHours(0, 0, 0, 0);
 };
 
-export const removeNanosecondsFromTime = (time: string) => {
-  return time.split(".")[0];
+export const cassandraTimeToDisplayTime = (time: string) => {
+  const hourMinutesSecondsNanoseconds = time.split(":");
+  return (
+    hourMinutesSecondsNanoseconds[0] + ":" + hourMinutesSecondsNanoseconds[1]
+  );
 };

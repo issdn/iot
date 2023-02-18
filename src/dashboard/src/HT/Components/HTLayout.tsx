@@ -9,6 +9,7 @@ import {
   NameType,
   ValueType,
 } from "recharts/types/component/DefaultTooltipContent";
+import { StyleHTMLAttributes } from "react";
 
 export type HTValueType = ValueType & HT;
 
@@ -40,9 +41,21 @@ export default function HTLayout() {
     else
       return (
         <div className="w-full h-full flex flex-col gap-y-4">
-          <Table data={data as HT[]} />
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-4 gap-y-4">
+          <div
+            className="h-full overflow-y-scroll xlbasis-3/5"
+            style={
+              {
+                "scrollbar-width": "thin",
+              } as StyleHTMLAttributes<HTMLDivElement> & {
+                "scrollbar-width": "thin";
+              }
+            }
+          >
+            <Table data={data as HT[]} />
+          </div>
+          <div className="h-full xl:basis-2/5 grid grid-cols-1 xl:grid-cols-2 gap-x-4 gap-y-4">
             <HTLineGraph
+              lineFill="#D97706"
               title="Temperature °C"
               dataLabel="temperature"
               data={data as HT[]}
@@ -51,6 +64,7 @@ export default function HTLayout() {
             />
 
             <HTLineGraph
+              lineFill="#2563EB"
               title="Humidity %"
               dataLabel="humidity"
               data={data as HT[]}
@@ -63,7 +77,7 @@ export default function HTLayout() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row gap-y-4 gap-x-4">
+    <div className="flex flex-col md:flex-row gap-y-4 gap-x-4 h-full">
       <DayPicker calendar={calendar} />
       <DataVisualisation />
     </div>

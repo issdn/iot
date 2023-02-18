@@ -29,8 +29,6 @@ DHT dht(DHTPin, DHTTYPE);
 
 // The data is being stored two times so that
 // it only sends it when the temperature or humidity changes.
-float lastTemperature = 22.00;
-float lastHumidity = 50.00;
 float temperature;
 float humidity;
 
@@ -46,8 +44,6 @@ void setup() {
 }
 
 void sendHttpsMessage(WiFiClient client, float temperature, float humidity) {
-  if (temperature == lastTemperature && humidity == lastHumidity) { return; };
-
   Serial.println(String("Sending data to: ") + "http://" + ip + ":" + String(port));
   
   HTTPClient http;
@@ -61,9 +57,7 @@ void sendHttpsMessage(WiFiClient client, float temperature, float humidity) {
   if (responseCode < 0) {
     Serial.println("ERROR -> " + http.errorToString(responseCode));
   } else {
-    lastTemperature = temperature;
     Serial.println(responseCode);
-    lastHumidity = humidity;
   };
   http.end();
 }
@@ -83,5 +77,5 @@ void loop() {
   humidity = dht.readHumidity();
 
   sendHttpsMessage(client, temperature, humidity);
-  delay(30000);
+  delay(60000);
 }
