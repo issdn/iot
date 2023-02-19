@@ -1,11 +1,13 @@
-import dayjs from "dayjs";
-import Icon from "./Icon";
-import IconButton from "./IconButton";
-import CalendarMonth, { UseCalendarType, useCalendar } from "./CalendarMonth";
-import { UseVisibilityType, useVisibility } from "./functions";
+import CalendarMonth from "./CalendarMonth";
+import { UseVisibilityType } from "./../../Components/functions";
+import IconButton from "../../Components/IconButton";
+import Icon from "../../Components/Icon";
+import { useVisibility } from "./../../Components/functions";
+import { CalendarContextType, useCalendar } from "../CalendarContext";
 
-export default function DayPicker({ calendar }: { calendar: UseCalendarType }) {
+export default function DayPicker() {
   const { visible, switchVisible } = useVisibility() as UseVisibilityType;
+  const calendar = useCalendar() as CalendarContextType;
 
   return (
     <div className="flex flex-col gap-y-2 lg:max-w-md">
@@ -36,18 +38,7 @@ export default function DayPicker({ calendar }: { calendar: UseCalendarType }) {
           }}
         />
       </div>
-      <CalendarMonth
-        visible={visible}
-        monthNumber={calendar.date.month()}
-        date={calendar.date}
-        moveMonthLeft={calendar.moveMonthLeft}
-        moveMonthRight={calendar.moveMonthRight}
-        setDay={calendar.setDay}
-        reachedMaxDay={calendar.reachedMaxDay}
-        reachedMinDay={calendar.reachedMinDay}
-        reachedMaxMonth={calendar.reachedMaxMonth}
-        reachedMinMonth={calendar.reachedMinMonth}
-      />
+      <CalendarMonth visible={visible} />
     </div>
   );
 }

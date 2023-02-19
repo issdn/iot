@@ -1,6 +1,4 @@
 import dayjs from "dayjs";
-import { useCalendar } from "../../Components/CalendarMonth";
-import DayPicker from "../../Components/DayPicker";
 import { HT } from "../types";
 import Table, { useHTTable } from "./Table";
 import HTLineGraph from "./HTLineGraph";
@@ -10,12 +8,17 @@ import {
   ValueType,
 } from "recharts/types/component/DefaultTooltipContent";
 import { StyleHTMLAttributes } from "react";
+import DayPicker from "../../Calendar/Components/DayPicker";
+import {
+  CalendarContextType,
+  useCalendar,
+} from "../../Calendar/CalendarContext";
 
 export type HTValueType = ValueType & HT;
 
 export default function HTLayout() {
-  const calendar = useCalendar(dayjs("2023-01-01"), dayjs());
-  const [data, setData] = useHTTable(calendar.date);
+  const { date } = useCalendar() as { date: CalendarContextType["date"] };
+  const [data, setData] = useHTTable(date);
 
   const htTooltip = (dataKey: keyof HT) => {
     return ({
@@ -39,16 +42,12 @@ export default function HTLayout() {
   return (
     <div className="flex h-fit flex-col gap-y-4 lg:h-full">
       <div className="flex h-screen w-full flex-col gap-x-4 gap-y-4 lg:h-full lg:basis-3/5 lg:flex-row lg:overflow-y-hidden">
-        <DayPicker calendar={calendar} />
+        <DayPicker />
         <div
           className="h-full w-full overflow-y-scroll"
-          style={
-            {
-              "scrollbar-width": "thin",
-            } as StyleHTMLAttributes<HTMLDivElement> & {
-              "scrollbar-width": "thin";
-            }
-          }
+          style={{
+            scrollbarWidth: "thin",
+          }}
         >
           <Table data={data as HT[]} />
         </div>
