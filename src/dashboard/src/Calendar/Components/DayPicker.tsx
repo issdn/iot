@@ -10,7 +10,7 @@ export default function DayPicker() {
   const calendar = useCalendar() as CalendarContextType;
 
   return (
-    <div className="flex flex-col gap-y-2 lg:max-w-md">
+    <div className="flex w-full flex-col gap-y-2 sm:w-80">
       <div className="flex flex-row items-center justify-between gap-x-2 rounded-xl bg-zinc-800 px-8 py-1">
         <IconButton
           name="chevron_left"
@@ -38,7 +38,11 @@ export default function DayPicker() {
           }}
         />
       </div>
-      <CalendarMonth visible={visible} />
+      <div className="relative w-full">
+        <div className="absolute z-50 w-full">
+          <CalendarMonth visible={visible} />
+        </div>
+      </div>
     </div>
   );
 }

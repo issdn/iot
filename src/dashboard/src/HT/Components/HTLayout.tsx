@@ -13,6 +13,7 @@ import {
   CalendarContextType,
   useCalendar,
 } from "../../Calendar/CalendarContext";
+import InfoPanel from "../../Components/InfoPanel";
 
 export type HTValueType = ValueType & HT;
 
@@ -42,7 +43,7 @@ export default function HTLayout() {
   return (
     <div className="flex h-fit flex-col gap-y-4 lg:h-full">
       <div className="flex h-screen w-full flex-col gap-x-4 gap-y-4 lg:h-full lg:basis-3/5 lg:flex-row lg:overflow-y-hidden">
-        <DayPicker />
+        <InfoPanel />
         <div
           className="h-full w-full overflow-y-scroll"
           style={{

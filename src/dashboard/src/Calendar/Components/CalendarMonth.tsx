@@ -45,7 +45,7 @@ export default function CalendarMonth({
 
   const MonthDays = () => {
     return (
-      <div className="grid grid-cols-7 place-content-center place-items-center gap-x-1 gap-y-1">
+      <div className="grid w-full grid-cols-7 place-content-center place-items-center gap-x-1 gap-y-1">
         {Array.from(Array(calendar.date.daysInMonth()).keys()).map(
           (day: number) => renderDayButton(day)
         )}
@@ -55,7 +55,7 @@ export default function CalendarMonth({
 
   const Calendar = () => {
     return (
-      <div className="flex flex-col items-center gap-y-3 rounded-xl bg-zinc-800 py-2 px-1">
+      <div className="flex w-full flex-col items-center gap-y-3 rounded-xl bg-zinc-800 py-2 px-1">
         <div className="flex w-[50%] flex-row items-center justify-between">
           <IconButton
             name="chevron_left"
