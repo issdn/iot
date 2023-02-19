@@ -42,7 +42,7 @@ export default function HTLayout() {
 
   return (
     <div className="flex h-fit flex-col gap-y-4 lg:h-full">
-      <div className="flex h-screen w-full flex-col gap-x-4 gap-y-4 lg:h-full lg:basis-3/5 lg:flex-row lg:overflow-y-hidden">
+      <div className="flex h-screen w-full flex-col gap-x-4 gap-y-4 lg:h-full lg:basis-4/6 lg:flex-row lg:overflow-y-hidden">
         <InfoPanel />
         <div
           className="h-full w-full overflow-y-scroll"
@@ -53,7 +53,7 @@ export default function HTLayout() {
           <Table data={data as HT[]} />
         </div>
       </div>
-      <div className="grid h-full w-full grid-cols-1 gap-x-4 gap-y-4 lg:h-full lg:basis-2/5 lg:grid-cols-2">
+      <div className="grid h-full w-full grid-cols-1 gap-x-4 gap-y-4 lg:h-full lg:basis-2/6 lg:grid-cols-2">
         <HTLineGraph
           lineFill="#D97706"
           title="Temperature °C"

@@ -27,9 +27,9 @@ export default function HTLineGraph({
   lineFill: string;
 }) {
   return (
-    <div className="flex h-full w-full flex-col items-center gap-y-2 rounded-xl border-2 border-zinc-700 pt-4 pr-3">
+    <div className="flex w-full flex-col items-center gap-y-2 rounded-xl border-2 border-zinc-700 pt-4 pr-3">
       <p>{title}</p>
-      <ResponsiveContainer height="100%" width="99%">
+      <ResponsiveContainer width="99%">
         <LineChart data={data}>
           <XAxis dataKey={(obj) => obj.measurement_time} />
           <YAxis domain={["dataMin", "dataMax"]} dataKey={dataKey} />
