@@ -1,5 +1,10 @@
 from pydantic import BaseModel
 
+# HT Database
+# temperature double
+# humidity int
+# measurement_date date
+# measurement_time time
 
 class ControllerModel(BaseModel):
     ip: str
